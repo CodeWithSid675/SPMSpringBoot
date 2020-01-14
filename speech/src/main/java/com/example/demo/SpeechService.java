@@ -43,7 +43,7 @@ public class SpeechService {
 //		 System.out. println("You entered string speechMail ==> "+speechMail.getMailAddress()+speechMail.getSenderAddress()+speechMail.getData());
          SimpleMailMessage mail = new SimpleMailMessage();
           
-         mail.setTo(speechMail.getSenderAddress());
+         mail.setTo(speechMail.getMailAddress());
          mail.setFrom(speechMail.getSenderAddress());
          mail.setSubject(speechMail.getData().getAuthor()+"-"+speechMail.getData().getSubjectKeyword()+"-"+speechMail.getData().getDate());
          mail.setText(speechMail.getData().getSpeechContent());
