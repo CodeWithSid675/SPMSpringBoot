@@ -3,10 +3,20 @@ package com.example.demo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 
 @Component
 public class SpeechService {
+	
+	private JavaMailSender javaMailSender;
+	
+	@Autowired
+	public SpeechService(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
 	
 	@Autowired
 	SpeechRepository speechRepository;
@@ -28,4 +38,17 @@ public class SpeechService {
 		speech = s;
 		speechRepository.save(speech);
 	}
+	
+	 public void sendMail(SpeechMail speechMail) throws MailException{
+//		 System.out. println("You entered string speechMail ==> "+speechMail.getMailAddress()+speechMail.getSenderAddress()+speechMail.getData());
+         SimpleMailMessage mail = new SimpleMailMessage();
+          
+         mail.setTo(speechMail.getSenderAddress());
+         mail.setFrom(speechMail.getSenderAddress());
+         mail.setSubject(speechMail.getData().getAuthor()+"-"+speechMail.getData().getSubjectKeyword()+"-"+speechMail.getData().getDate());
+         mail.setText(speechMail.getData().getSpeechContent());
+          
+         javaMailSender.send(mail);
+         }      
+	
 }
