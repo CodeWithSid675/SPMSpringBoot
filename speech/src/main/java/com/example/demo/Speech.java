@@ -1,10 +1,13 @@
 package com.example.demo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "speech")
 public class Speech {
 
 	@Id
@@ -14,7 +17,15 @@ public class Speech {
 	private String date;
 	private String subjectKeyword;
 	private String speechContent;
+	@Column(name = "mail_id")
+	private String mailId;
 	
+	public String getMailId() {
+		return mailId;
+	}
+	public void setMailId(String mailId) {
+		this.mailId = mailId;
+	}
 	public String getAuthor() {
 		return author;
 	}

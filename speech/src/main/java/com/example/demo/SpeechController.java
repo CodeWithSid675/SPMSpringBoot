@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +27,12 @@ public class SpeechController {
 		return speechService.getSpeech();
 	}
 	
+	@GetMapping("/{mailId}")
+	public List<Speech> getSpeeches(@PathVariable String mailId){
+		List<Speech> src = speechService.getSpeechByMailId(mailId.trim());
+		return src;
+	}
+	
 	@PostMapping
 	public void postSpeech(@RequestBody Speech speech) {
 		speechService.add(speech);
@@ -43,10 +50,19 @@ public class SpeechController {
 	
 	@PostMapping("/sendmail")
 	public void sendMail(@RequestBody SpeechMail speechMail) {		
-//		System.out.println("You entered string sendmail"+speechMail.getMailAddress()+speechMail.getSenderAddress()+speechMail.getData().getAuthor());
 		speechService.sendMail(speechMail);
 	}
 	
+	@PostMapping("/signup")
+	public Object signUp(@RequestBody Users users) {
+		Object map = speechService.signupUsers(users);
+		return map;
+	}
 	
+	@PostMapping("/login")
+	public Object login(@RequestBody Users users) {  
+		Object response = speechService.loginUser(users);
+		return response;
+	}
 	
 }
